@@ -1,0 +1,26 @@
+
+.products-item-control{
+    width: 100%;
+}
+
+.products-item-control strong{
+    color: gray;
+}
+
+.products-item-control > summary {
+    font-size: larger;
+}
+
+
+.products-item-control ul {
+    text-align: left;
+}
+
+.products-item-control button{
+    width: 50%;
+    margin: auto
+}
+
+.products-item-control img{
+    margin-bottom: 30px;
+}

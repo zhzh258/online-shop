@@ -19,7 +19,7 @@ async function cache_signup_error(req, action){
     user.init_with_req(req);
     const password_confirm = req.body["password-confirm"]
     const password = user.password;
-    const is_occupied = await user.is_occupied();
+    const is_occupied = await User.is_occupied(user.email);
 
     
     user.password = undefined; // drop the password
@@ -59,7 +59,7 @@ async function cache_login_error(req, action){
     const user = new User();
     user.init_with_req(req);
     // no such user
-    if(!await user.is_occupied()){ 
+    if(!await User.is_occupied(user.email)){ 
         req.session.login_cache = {
             has_error: true,
             data: {
@@ -101,9 +101,15 @@ function init_cache_login(){
     }
 }
 
-function create_session_uid(){
+function create_session_user(req, user, action){
     req.session.uid = user._id.toString();
+    req.session.isAdmin = user.isAdmin;
     req.session.save(action);
+}
+
+function delete_session_user(req){
+    req.session.uid = null;
+    req.session.isAdmin = undefined;
 }
 
 module.exports = {
@@ -112,6 +118,7 @@ module.exports = {
     cache_login_error: cache_login_error,
     init_cache_signup: init_cache_signup,
     init_cache_login: init_cache_login,
-    create_session_uid: create_session_uid
+    create_session_user: create_session_user,
+    delete_session_user: delete_session_user
 }
 

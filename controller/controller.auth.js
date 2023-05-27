@@ -14,7 +14,7 @@ function get_signup(req, res){
 async function post_signup(req, res){
     const user = new User();
     user.init_with_req(req);
-    if(!util.is_valid(req) || await user.is_occupied()){
+    if(!util.is_valid(req) || await User.is_occupied(user.email)){
         util.cache_signup_error(req, function(){
             res.redirect("/signup")
         });
@@ -37,22 +37,30 @@ async function get_login(req, res){
 }
 
 async function post_login(req, res){
-    const user = new User();
+    let user = new User();
     user.init_with_req(req);
-    // if: incorrect password || not existing
-    const existing_id = await user.is_occupied();
-    const uid = existing_id.toString();
-    if(!existing_id || !await user.is_password_correct()){
+    // if:  not existing || incorrect password
+    if(!await User.is_occupied(user.email) || !await user.is_password_correct()){
         util.cache_login_error(req, function(){
             res.redirect("/login")
         });
         return;
     } 
+    
     // else: authenticated
-    req.session.uid = existing_id;
-    req.session.save(function(){
+    user = await User.get_user_by_email(user.email);
+    console.log(user);
+    util.create_session_user(req, user, function(){
         res.redirect('/')
-    });
+    })
+}
+
+
+
+function post_logout(req, res){
+    // drop req.session.uid
+    req.session.uid = null;
+    res.redirect("/");
 }
 
 module.exports = {
@@ -60,4 +68,5 @@ module.exports = {
     post_signup: post_signup,
     get_login: get_login,
     post_login: post_login,
+    post_logout: post_logout
 }
