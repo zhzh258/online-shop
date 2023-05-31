@@ -1,4 +1,4 @@
-<nav class="container-fluid">
+<nav class="container-fluid" >
     <ul>
         <li>
             <a href="/"><strong>Home</strong></a>
@@ -7,22 +7,22 @@
     <ul>
         
         <% if(!locals.isAdmin){ %>
-        <li><a href="/products">Browse the goods</a></li>
-        <li><a href="/cart">My shopping cart</a></li>
+        <li><a href="/products" >Products</a></li>
+        <li><a href="/cart">Cart <sup><mark class="badge"><%=locals.cart.items.length %></mark></sup></a></li>
         <% } %>
 
         <% if(locals.isAuth && !locals.isAdmin){ %>
-        <li><a href="/order">My history orders</a></li>
+        <li><a href="/orders">Orders</a></li>
         <% } %>
 
         <% if(locals.isAdmin){ %>
-        <li><a href="/admin/products">Manage products</a></li>
-        <li><a href="/admin/orders">Manage orders</a></li>
+        <li><a href="/admin/products">Manage Products</a></li>
+        <li><a href="/admin/orders">Manage Orders</a></li>
         <% } %>
             
         <% if(!locals.isAuth){ %>
-        <li><a href="/login">Login</a></li>
-        <li><a href="/signup">Signup</a></li>
+        <li><a href="/login" role="button">Login</a></li>
+        <li><a href="/signup" role="button">Signup</a></li>
         <% } %>
 
         <% if(locals.isAuth){ %>

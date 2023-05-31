@@ -16,7 +16,7 @@ async function deleteProduct(event){
     const response = await fetch(url, {
         method: "DELETE",
     })
-    if(!response){
+    if(!response.ok){
         alert("error!")
         throw(error);
     }

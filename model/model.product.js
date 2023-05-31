@@ -48,9 +48,16 @@ class Product{
     // input: string id
     // output: 1 - if found: a Product()    2 - unfound: undefined
     static async find_by_id(id){
-        const _id = new mongodb.ObjectId(id); // string -> ObjectId()
+        let productData;
+        try{
+            const _id = new mongodb.ObjectId(id); // string -> ObjectId()
+            productData = await db.getDB().collection("products").findOne({_id: _id});
+        } catch(error){
+            error.code = 500;
+            error.message = `failed to look for id: ${id} in database`;
+            throw(error);
+        }
         
-        const productData = await db.getDB().collection("products").findOne({_id: _id});
         if(productData){
             return new Product(productData);
         } else{

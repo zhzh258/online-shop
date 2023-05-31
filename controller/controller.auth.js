@@ -50,6 +50,7 @@ async function post_login(req, res){
     // else: authenticated
     user = await User.get_user_by_email(user.email);
     console.log(user);
+    // the uid stored in session/locals will eventually be a string
     util.create_session_user(req, user, function(){
         res.redirect('/')
     })

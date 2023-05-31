@@ -1,3 +1,5 @@
+const Cart = require("../model/model.cart")
+
 const session = require("express-session");
 const config_session = require("../config/config.session");
 

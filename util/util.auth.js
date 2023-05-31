@@ -101,8 +101,11 @@ function init_cache_login(){
     }
 }
 
+// stored in session: uid, isAuth, isAdmin 
+// see middleware.auth
 function create_session_user(req, user, action){
     req.session.uid = user._id.toString();
+    req.session.first_name = user.first_name;
     req.session.isAdmin = user.isAdmin;
     req.session.save(action);
 }

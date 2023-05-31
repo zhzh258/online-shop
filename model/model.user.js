@@ -1,3 +1,4 @@
+const mongodb = require("mongodb");
 const db = require("../data/database/database")
 const bcriptjs = require("bcryptjs");
 
@@ -47,11 +48,19 @@ class User{
     }
 
     // get a user from database by "user._id"
-    // 1. _id here must be Object()
+    // 1. id here must be string
     // 2. if found, return a User()
     // 3. if not found, return false
-    static async get_user_by_id(_id){
-        const existingUser = await db.getDB().collection("users").findOne({_id: _id});
+    static async get_user_by_id(id){
+        const _id = new mongodb.ObjectId(id);
+        
+        let existingUser;
+        try{
+            existingUser = await db.getDB().collection("users").findOne({_id: _id});
+        } catch(error){
+            throw(error);
+        }
+        
         if(existingUser){
             return existingUser;
         } else{

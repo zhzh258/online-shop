@@ -1,5 +1,6 @@
 const Product = require("../model/model.product");
 const mongodb = require("mongodb");
+const Order = require("../model/model.order")
 
 async function get_products(req, res){
     // check session.isAdmin??
@@ -66,18 +67,33 @@ async function post_products_update(req, res){
     
 }
 
+// ajax
 async function delete_products(req, res){
     const id = req.params.id;
     Product.delete_by_id(id);
     res.json({message: "The product has been deleted"})
 }
 
-function get_orders(req, res){
-    res.render("admin/orders/orders");
+async function get_orders(req, res){
+    let orders = await Order.find_all();
+    orders = orders.map(function(order){
+        order.id = order._id.toString();
+        return order;
+    })
+    res.render("customer/orders/orders", {orders: orders});
 }
 
-function post_orders(req, res){
+async function post_orders(req, res){
+    const id = req.body.id;
+    const status = req.body.status;
 
+    await Order.update_status_by_id(id, status);
+    
+    console.log(id);
+    res.status(201).json({
+        message: "status updated",
+        new_status: status
+    })
 }
 
 

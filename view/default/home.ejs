@@ -5,8 +5,20 @@
     <%-include("../includes/header") %>
     <main class="container">
         
-            <h1>Home page</h1>
-       <p> uid at locals: <%=locals.uid %></p>
+        <h1>Home page</h1>
+        <article>
+            <% if(locals.isAuth){ %>
+                <h2>Welcome, <%=locals.first_name %></h2>
+            <% } else{ %>
+                <h2>Welcome, new visitor</h2>
+            <% } %>
+            <p><a href="/login">Login</a> now</p>
+        </article>
+        
+        <p>(testing only)</p>
+        <p>Admin account: 123456@outlook.com</p>
+        <p>Admin password: 123456</p>
+        <p>Stripe card number (Test mode, success): 4242 4242 4242 4242</p>
     </main>
     <%-include("../includes/footer") %>
 </body>
