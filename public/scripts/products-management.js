@@ -11,7 +11,7 @@ async function deleteProduct(event){
 
     const details_item_ele = document.querySelector(`#item-${id}`)
     // 127.0.0.1
-    const url = `//localhost:4000/admin/products/${id}` + `?_csrf=${csrfToken}`
+    const url = `//localhost:8080/admin/products/${id}` + `?_csrf=${csrfToken}`
     // console.log("url", url);
     const response = await fetch(url, {
         method: "DELETE",
