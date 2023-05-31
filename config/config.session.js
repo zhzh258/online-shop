@@ -1,6 +1,6 @@
 const mongodb_store = require("connect-mongodb-session")
 
-const mongodb_url = "mongodb://127.0.0.1:27017";
+const mongodb_url = "mongodb+srv://zzh:doo1YnKEkXsFEojN@cluster0.o4yext9.mongodb.net/?retryWrites=true&w=majority";
 
 // MONGODB_URL from the environment
 if(process.env.MONGODB_URL){
