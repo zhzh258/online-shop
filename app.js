@@ -51,8 +51,9 @@ app.use("/admin", routes_admin);
 
 db.connectDB()
     .then(function () {
-        app.listen(4000);
+        app.listen(3000);
     })
     .catch(function (error) {
         console.log("Failed to connect to the database!");
+        console.log(error);
     });
